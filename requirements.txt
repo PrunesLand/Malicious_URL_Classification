@@ -1,0 +1,7 @@
+kagglehub
+pandas
+numpy
+xgboost
+scikit-learn<1.6
+category_encoders
+tqdm
