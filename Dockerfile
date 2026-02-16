@@ -11,4 +11,4 @@ COPY . /app
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Run malicious_urls_detection.py when the container launches
-CMD ["python", "malicious_urls_detection.py"]
+CMD ["python", "main.py"]
