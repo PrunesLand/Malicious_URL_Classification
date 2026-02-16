@@ -1,0 +1,32 @@
+# Git
+.git
+.gitignore
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.env
+.venv/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Mac
+.DS_Store
+
+# IDE
+.idea/
+.vscode/
+
+# Docker
+Dockerfile
+.dockerignore
+
+# Local artifacts (if any)
+implementation_plan.md
+task.md
