@@ -13,6 +13,7 @@ from sklearn.base import clone
 from sklearn.neural_network import MLPClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from tqdm import tqdm
+from sklearn.ensemble import VotingClassifier
 
 #Data download
 path = kagglehub.dataset_download("sid321axn/malicious-urls-dataset")
@@ -26,14 +27,24 @@ print(df.info()) # To view the column names
 print(f"{df['type'].value_counts(normalize=True) * 100}") #We analyze the distribution of the classes
 
 # Classifiers
-clf = XGBClassifier()
+clf1 = XGBClassifier()
 clf2 = KNeighborsClassifier()
 clf3 = MLPClassifier()
+voting_clf = VotingClassifier(
+    estimators=[
+        ('xgb', clf1), 
+        ('knn', clf2), 
+        ('mlp', clf3)
+    ],
+    voting='soft',
+    weights=[3,2,1]
+)
 
 models = {
-    'XGBClassifier': clf,
+    'XGBClassifier': clf1,
     'KNeighborsClassifier': clf2,
-    'MLPClassifier': clf3
+    'MLPClassifier': clf3,
+    'WeightedVoting': voting_clf,
 }
 
 #Feature engineering
@@ -60,7 +71,7 @@ y_encoded = le.fit_transform(y)
 
 cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
 
-arr = np.zeros((3,5,4))
+arr = np.zeros((4,5,4))
 
 for i, (train_index, test_index) in enumerate(tqdm(cv.split(X, y), total=5, desc="CV Folds")):
 
