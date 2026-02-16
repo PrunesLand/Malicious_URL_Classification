@@ -26,6 +26,14 @@ This project classifies URLs as malicious or benign using machine learning model
 
     The `--rm` flag automatically removes the container after it finishes running to save space.
 
+3.  **Run the analysis script:**
+
+    To view the nature of the dataset using the cache:
+
+    ```bash
+    docker run --rm -v $(pwd)/kaggle_cache:/root/.cache/kagglehub malicious-url-classifier python -m src.analyze
+    ```
+
 ## Notes
 
 - The script uses `kagglehub` to download the dataset. If the dataset requires authentication, you may need to pass your Kaggle credentials as environment variables:
@@ -36,3 +44,12 @@ This project classifies URLs as malicious or benign using machine learning model
     ```bash
     docker run --rm -v $(pwd)/kaggle_cache:/root/.cache/kagglehub malicious-url-classifier
     ```
+
+## running Locally
+
+To run the analysis script locally without Docker, execute the following from the project root:
+
+```bash
+pip install -r requirements.txt
+python3 -m src.analyze
+```
