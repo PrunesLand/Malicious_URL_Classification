@@ -3,6 +3,7 @@ from sklearn.preprocessing import LabelEncoder
 import category_encoders as ce
 import re
 from urllib.parse import urlparse
+from tld import get_tld
 
 def process_tld(url):
     try:
@@ -81,7 +82,7 @@ def extract_url_features(df):
 
     df['url_len'] = df['url'].apply(len)
     df['dot_count'] = df['url'].apply(lambda x: x.count('.'))
-    df['digit_count'] = df['url'].apply(lambda x: sum(c.isdigit() for c in x))
+    df['has_digit'] = df['url'].apply(lambda x: sum(c.isdigit() for c in x))
     df['domain'] = df['url'].apply(lambda i: process_tld(i))
 
     feature = ['@','?','-','=','.','#','%','+','$','!','*',',','//']
@@ -90,7 +91,7 @@ def extract_url_features(df):
 
     df['abnormal_url'] = df['url'].apply(lambda i: abnormal_url(i))
     df['https'] = df['url'].apply(lambda i: httpSecure(i))
-    df['digits']= df['url'].apply(lambda i: digit_count(i))
+    df['digit_count']= df['url'].apply(lambda i: digit_count(i))
     df['letters']= df['url'].apply(lambda i: letter_count(i))
     df['Shortining_Service'] = df['url'].apply(lambda x: Shortining_Service(x))
     df['having_ip_address'] = df['url'].apply(lambda i: having_ip_address(i))
