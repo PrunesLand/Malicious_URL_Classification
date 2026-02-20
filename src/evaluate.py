@@ -1,3 +1,4 @@
+from sklearn.preprocessing import StandardScaler
 import numpy as np
 from tqdm import tqdm
 from sklearn.model_selection import StratifiedKFold
@@ -18,14 +19,21 @@ def evaluate_models(X, y_encoded, models):
         y_train, y_test = y_encoded[train_index], y_encoded[test_index]
 
         woe_encoder = get_woe_encoder()
+        scaler = StandardScaler()
        
+        print('\n === Data is Encoding === \n')
         X_train_encoded = woe_encoder.fit_transform(X_train, y_train)
         X_test_encoded = woe_encoder.transform(X_test)
+        
+        print('\n === Data is Scaling === \n')
+        X_train_scaled = scaler.fit_transform(X_train_encoded)
+        X_test_scaled = scaler.transform(X_test_encoded)
 
         for j, (model_name, clf) in enumerate(models.items()):
+            print(f'{model_name} is training')
             clf_clone = clone(clf)
-            clf_clone.fit(X_train_encoded, y_train)
-            prediction = clf_clone.predict(X_test_encoded)
+            clf_clone.fit(X_train_scaled, y_train)
+            prediction = clf_clone.predict(X_test_scaled)
 
             acc = accuracy_score(y_test, prediction)
             prec = precision_score(y_test, prediction, average='weighted')
