@@ -1,3 +1,4 @@
+from sklearn.preprocessing import StandardScaler
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 import category_encoders as ce
@@ -93,10 +94,10 @@ def extract_url_features(df):
     df['https'] = df['url'].apply(lambda i: httpSecure(i))
     df['digit_count']= df['url'].apply(lambda i: digit_count(i))
     df['letters']= df['url'].apply(lambda i: letter_count(i))
-    df['Shortining_Service'] = df['url'].apply(lambda x: Shortining_Service(x))
+    df['Shortening_Service'] = df['url'].apply(lambda x: Shortining_Service(x))
     df['having_ip_address'] = df['url'].apply(lambda i: having_ip_address(i))
 
-    X = df[['url_len', 'dot_count', 'digit_count', 'domain', 'abnormal_url', 'https', 'digits', 'letters', 'Shortining_Service', 'having_ip_address']]
+    X = df[['url_len', 'dot_count', 'digit_count', 'domain', 'abnormal_url', 'https', 'has_digit', 'letters', 'Shortening_Service', 'having_ip_address']]
     y = df['type']
     return X, y
 
