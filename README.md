@@ -4,9 +4,15 @@ This project classifies URLs as malicious or benign using an ensemble of machine
 
 
 ## Table of Contents
-1. [Prerequisites](#prerequisites)
-2. [How to run with Docker](#how-to-run-with-docker)
-3. [Running Locally](#running-locally)
+1. [Dataset](#dataset)
+   - [Raw Data Sample](#raw-data-sample)
+2. [Feature Engineering](#feature-engineering)
+3. [Models](#models)
+4. [Workflow](#workflow)
+5. [Evaluation](#evaluation)
+6. [Prerequisites](#prerequisites)
+7. [How to Run with Docker](#how-to-run-with-docker)
+8. [Running Locally](#running-locally)
 
 ## Dataset
 The dataset was acquired from [kaggle](https://www.kaggle.com/datasets/sid321axn/malicious-urls-dataset).  
