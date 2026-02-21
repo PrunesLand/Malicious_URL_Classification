@@ -1,6 +1,6 @@
 # Malicious URL Classifier
 
-This project classifies URLs as malicious or benign using an ensemble of machine learning models (XGBoost, KNN, MLP, SVM and GNB) with a combination phase using weighted voting on an imbalanced dataset.
+This project classifies URLs as malicious or benign using an ensemble of machine learning models (RF, KNN, MLP, SVM and GNB) with a combination phase using weighted voting on an imbalanced dataset.
 
 
 ## Table of Contents
@@ -45,7 +45,7 @@ Due to the presence of only a single feature: `url`, training would not be effec
 
 ## Models
 According to this [study](https://www.sciencedirect.com/science/article/pii/S1568494621006104?via%3Dihub#sec3.1), an effective ensemble should contain diverse classifiers of different types. The classifiers used in this study are:
-- XGBoost
+- Random Forest Classifier
 - K-Nearest Neighbor
 - MLP
 - Gaussian Naive Bayes
