@@ -1,4 +1,3 @@
-# from sklearn.preprocessing import LabelEncoder
 import pandas as pd
 from src.data_loader import download_data, load_data
 from src.features import extract_url_features
