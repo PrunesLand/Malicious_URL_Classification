@@ -1,7 +1,4 @@
-from sklearn.preprocessing import StandardScaler
 import pandas as pd
-from sklearn.preprocessing import LabelEncoder
-import category_encoders as ce
 import re
 from urllib.parse import urlparse
 from tld import get_tld
@@ -100,9 +97,3 @@ def extract_url_features(df):
     X = df[['url_len', 'dot_count', 'digit_count', 'domain', 'abnormal_url', 'https', 'has_digit', 'letters', 'Shortening_Service', 'having_ip_address']]
     y = df['type']
     return X, y
-
-def get_target_encoder():
-    return LabelEncoder()
-
-def get_woe_encoder():
-    return ce.TargetEncoder(cols=['domain'])

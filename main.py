@@ -1,6 +1,7 @@
+# from sklearn.preprocessing import LabelEncoder
 import pandas as pd
 from src.data_loader import download_data, load_data
-from src.features import extract_url_features, get_target_encoder
+from src.features import extract_url_features
 from src.models import get_models
 from src.evaluate import evaluate_models, print_results
 
@@ -12,9 +13,8 @@ def main():
     #  Feature Engineering
     X, y = extract_url_features(df)
 
-    #  Target Encoding
-    le = get_target_encoder()
-    y_encoded = le.fit_transform(y)
+    #  Label Encoding
+    y_encoded = pd.factorize(y, sort=True)[0]
 
     #  Get Models
     models = get_models()
