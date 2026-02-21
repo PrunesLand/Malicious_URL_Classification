@@ -24,3 +24,6 @@ pip-delete-this-directory.txt
 # Dataset (if downloaded locally)
 *.csv
 kaggle_cache/
+
+#images
+*.png
