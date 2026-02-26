@@ -2,7 +2,8 @@ import pandas as pd
 from src.data_loader import download_data, load_data
 from src.features import extract_url_features
 from src.models import get_models
-from src.evaluate import evaluate_models, print_results
+from src.evaluate import evaluate_models
+from src.results import print_results, save_voting_result, display_confusion_matrix
 
 def main():
     #  Download and Load Data
@@ -19,10 +20,13 @@ def main():
     models = get_models()
 
     #  Evaluate
-    results = evaluate_models(X, y_encoded, models)
+    results, voting_data = evaluate_models(X, y_encoded, models)
     
     #  Print Results
     print_results(results, models)
+    save_voting_result(voting_data)
+    display_confusion_matrix()
+    
 
 if __name__ == "__main__":
     main()
