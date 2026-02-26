@@ -107,6 +107,13 @@ in
     docker run -v $(pwd)/outputs:/app/outputs malicious-url-classifier python -m src.analyze
     ```
 
+5. **Run mock test**
+
+    To test whether desired print and plots are working.
+    ```bash
+    docker run --rm -v $(pwd):/app -w /app malicious-url-classifier python -m src.mock_test
+    ```
+
 ## Notes
 
 - The script uses `kagglehub` to download the dataset. If the dataset requires authentication, you may need to pass your Kaggle credentials as environment variables:
