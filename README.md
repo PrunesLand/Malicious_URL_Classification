@@ -87,7 +87,7 @@ The metrics used in this study are:
     Once the build is complete, run the application:
 
     ```bash
-    docker run --rm malicious-url-classifier
+    docker run --rm -v $(pwd):/app -w /app malicious-url-classifier
     ```
 
     The `--rm` flag automatically removes the container after it finishes running to save space.
