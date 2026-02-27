@@ -13,7 +13,7 @@ def evaluate_models(X, y_encoded, models):
     
     num_models = len(models)
     results = np.zeros((num_models, N_FOLDS, 4))
-    weighted_voting_data = []
+    evaluation_results = {model_name: [] for model_name in models.keys()}
     
     for i, (train_index, test_index) in enumerate(cv.split(X, y_encoded)):
         X_train, X_test = X.iloc[train_index], X.iloc[test_index]
@@ -50,11 +50,16 @@ def evaluate_models(X, y_encoded, models):
 
             results[j, i] = [acc, prec, rec, f1]
 
-            if model_name == "WeightedVoting":
-                weighted_voting_data.append({
-                    'fold': i + 1,
-                    'y_true': y_test,
-                    'y_pred': prediction
-                })
+            evaluation_results[model_name].append({
+                'fold': i + 1,
+                'y_true': y_test.tolist(),
+                'y_pred': prediction.tolist(),
+                'metrics': {
+                    'accuracy': acc,
+                    'precision': prec,
+                    'recall': rec,
+                    'f1': f1
+                }
+            })
             
-    return results, weighted_voting_data
+    return results, evaluation_results

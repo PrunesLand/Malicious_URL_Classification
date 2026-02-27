@@ -19,38 +19,45 @@ def print_results(results, models):
         print(f"Recall:    {mean_scores[2]:.4f} (± {std_scores[2]:.4f})")
         print(f"F1 Score:  {mean_scores[3]:.4f} (± {std_scores[3]:.4f})")
 
-def display_confusion_matrix():
-    with open("outputs/" + VOTING_FILE_NAME, 'r') as f:
-        data = json.load(f)
-    
-    y_true = data['y_true']
-    y_pred = data['y_pred']
-    
-    cm = confusion_matrix(y_true, y_pred)
-    
-    _, ax = plt.subplots(figsize=(8, 6))
-    disp = ConfusionMatrixDisplay(confusion_matrix=cm)
-    disp.plot(cmap=plt.cm.Blues, ax=ax)
-    
-    plt.title(f"Weighted Voting Confusion Matrix")
-    plt.savefig('outputs/confusion_matrix.png')
-
-def save_voting_result(data):
-    all_true = np.concatenate([fold['y_true'] for fold in data])
-    all_pred = np.concatenate([fold['y_pred'] for fold in data])
-
-    final_data = {
-        "model_name": "WeightedVoting",
-        "total_samples": len(all_true),
-        "y_true": all_true.tolist(),
-        "y_pred": all_pred.tolist()
-    }
+def save_result(data):
 
     output_dir = Path("outputs")
     output_dir.mkdir(parents=True, exist_ok=True)
     json_filepath = output_dir / VOTING_FILE_NAME
 
     with open(json_filepath, 'w') as f:
-        json.dump(final_data, f, indent=4)
+        json.dump(data, f, indent=4)
     
     print(f"Saved to {json_filepath}")
+
+#Plotting graphs
+def display_all_confusion_matrices(evaluation_results):
+    model_names = list(evaluation_results.keys())
+    num_models = len(model_names)
+    
+    cols = 3
+    rows = (num_models + cols - 1) // cols
+    _, axes = plt.subplots(rows, cols, figsize=(cols * 5, rows * 4))
+    axes = axes.flatten()
+
+    for idx, model_name in enumerate(model_names):
+        all_y_true = []
+        all_y_pred = []
+        for fold_result in evaluation_results[model_name]:
+            all_y_true.extend(fold_result['y_true'])
+            all_y_pred.extend(fold_result['y_pred'])
+
+        cm = confusion_matrix(all_y_true, all_y_pred)
+        disp = ConfusionMatrixDisplay(confusion_matrix=cm)
+        disp.plot(cmap=plt.cm.Blues, ax=axes[idx], colorbar=False)
+        axes[idx].set_title(model_name, fontsize=11, fontweight='bold')
+
+    for idx in range(num_models, len(axes)):
+        axes[idx].set_visible(False)
+
+    plt.suptitle("Confusion Matrices — All Classifiers", fontsize=14, fontweight='bold', y=1.02)
+    plt.tight_layout()
+    plt.savefig('outputs/all_confusion_matrices.png', bbox_inches='tight')
+    plt.show()
+    print("Saved to outputs/all_confusion_matrices.png")
+
