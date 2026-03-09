@@ -32,18 +32,19 @@ def save_result(data):
 
 #Plotting graphs
 def display_all_confusion_matrices(evaluation_results):
-    model_names = list(evaluation_results.keys())
-    num_models = len(model_names)
+    num_models = len(evaluation_results)
     
     cols = 3
     rows = (num_models + cols - 1) // cols
     _, axes = plt.subplots(rows, cols, figsize=(cols * 5, rows * 4))
     axes = axes.flatten()
 
-    for idx, model_name in enumerate(model_names):
+    for idx, (model_name, folds) in enumerate(evaluation_results.items()):
+
         all_y_true = []
         all_y_pred = []
-        for fold_result in evaluation_results[model_name]:
+        
+        for fold_result in folds:
             all_y_true.extend(fold_result['y_true'])
             all_y_pred.extend(fold_result['y_pred'])
 
@@ -60,4 +61,3 @@ def display_all_confusion_matrices(evaluation_results):
     plt.savefig('outputs/all_confusion_matrices.png', bbox_inches='tight')
     plt.show()
     print("Saved to outputs/all_confusion_matrices.png")
-

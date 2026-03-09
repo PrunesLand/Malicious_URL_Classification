@@ -1,5 +1,5 @@
 import numpy as np
-from src.results import display_all_confusion_matrices, save_voting_result
+from src.results import display_all_confusion_matrices, save_result
 
 def test_mock_voting():
     mock_evaluation_results = {
@@ -25,7 +25,7 @@ def test_mock_voting():
         "y_pred": np.concatenate([fold["y_pred"] for fold in mock_evaluation_results["RandomForest"]]).tolist(),
     }
 
-    save_voting_result(mock_voting_result)
+    save_result(mock_voting_result)
     display_all_confusion_matrices(mock_evaluation_results)
 
 if __name__ == "__main__":

@@ -24,9 +24,7 @@ def main():
     
     #  Print Results
     print_results(results, models)
-    save_result(voting_data)
-    display_all_confusion_matrices(results)
-    
+    save_result(voting_data)    
 
 if __name__ == "__main__":
     main()
