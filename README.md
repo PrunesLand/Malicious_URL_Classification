@@ -114,6 +114,13 @@ in
     docker run --rm -v $(pwd):/app -w /app malicious-url-classifier python -m src.mock_test
     ```
 
+6. **Generate Plots**
+
+    Generates plots for result analysis.
+    ```bash
+    docker run --rm -v $(pwd):/app -w /app malicious-url-classifier python -m src.generate_plots 
+    ```
+
 ## Notes
 
 - The script uses `kagglehub` to download the dataset. If the dataset requires authentication, you may need to pass your Kaggle credentials as environment variables:
@@ -141,3 +148,10 @@ Docker has build-in commands that are ment to be used for house keeping tasks:
 - `docker image prune -a`: delete all images not used by any container
 - `docker system prune`: delete stopped containers, unused networks and dangling image + dangling build cache
 - `docker system prune -a`: delete stopped containers, unused networks, images not used by any container + all build cache
+
+## How to see snippet of the results
+
+You can use jq to view a snippet of the results file.
+
+`jq 'to_entries | .[0]' outputs/results.json | head -n 10`
+
