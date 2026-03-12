@@ -63,10 +63,30 @@ The project follows a standard machine learning pipeline as orchestrated in `mai
 
 ## Evaluation
 The metrics used in this study are:
-- Accuracy: The proportion of all classifications that were correct, whether positive or negative.
 - Recall: The true positive rate (TPR), or the proportion of all actual positives that were classified correctly as positives.
 - Precision: The proportion of all the model's positive classifications that are actually positive.
 - F1 Score: The harmonic mean of the precision and recall.
+
+## Results
+<img src="outputs/all_confusion_matrices.png" alt="Class Distribution" width="800"/>
+
+### Comprehensive Breakdown (Precision / Recall / F1-Score)
+
+| Model | Class 0 | Class 1 | Class 2 | Class 3 |
+| :--- | :--- | :--- | :--- | :--- |
+| **RandomForest** | 0.91 / 0.98 / 0.95 | **1.00 / 1.00 / 1.00** | 0.99 / 0.93 / 0.96 | 0.85 / **0.58** / **0.69** |
+| **MLPClassifier** | 0.91 / 0.99 / 0.95 | 0.97 / 0.99 / 0.98 | 0.93 / 0.90 / 0.92 | 0.90 / 0.52 / 0.66 |
+| **KNeighbors** | 0.91 / 0.98 / 0.94 | 0.94 / 0.98 / 0.96 | 0.92 / 0.92 / 0.92 | 0.79 / 0.51 / 0.62 |
+| **SGDClassifier** | 0.91 / 0.99 / 0.95 | 0.81 / 0.99 / 0.89 | 0.77 / 0.57 / 0.66 | 0.76 / 0.33 / 0.46 |
+| **GaussianNB** | 0.88 / 0.99 / 0.93 | 0.84 / 1.00 / 0.91 | 0.85 / 0.77 / 0.81 | 0.72 / 0.22 / 0.33 |
+| **WeightedVoting**| 0.91 / 0.99 / 0.95 | 0.97 / 1.00 / 0.99 | 0.96 / 0.92 / 0.94 | **0.93** / 0.53 / 0.67 |
+
+### Discussions
+- Models performed well on minority classes except for class 3 (Malware).
+- Models SGDClassifier and GaussianNB performed the worst among all ensembles and did not contribute well to the combined voting. These models can be discarded for other models of the same type to help improve the score.
+- The best performing in this ensemble is the RandomForest against all class types.
+- The order of importance in the weighted voting will need to be adjusted to outputt the best voting result.
+
 
 ## Prerequisites
 
