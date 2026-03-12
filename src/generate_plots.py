@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 
 from src.results import display_all_confusion_matrices
-
+from src.results import print_model_results
 
 def generate_plots():
     results_file = Path("outputs/results.json")
@@ -11,6 +11,8 @@ def generate_plots():
         results_data = json.load(file)
 
     display_all_confusion_matrices(results_data)
+    print_model_results(results_data)
+
 
 
 if __name__ == "__main__":

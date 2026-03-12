@@ -4,6 +4,7 @@ from pathlib import Path
 from matplotlib import pyplot as plt
 from sklearn.metrics import ConfusionMatrixDisplay, confusion_matrix
 import numpy as np
+from sklearn.metrics import classification_report, accuracy_score, confusion_matrix
 
 from src.config import VOTING_FILE_NAME
 
@@ -61,3 +62,26 @@ def display_all_confusion_matrices(evaluation_results):
     plt.savefig('outputs/all_confusion_matrices.png', bbox_inches='tight')
     plt.show()
     print("Saved to outputs/all_confusion_matrices.png")
+
+def print_model_results(evaluation_results):
+    print("MODEL EVALUATION RESULTS (Aggregated Across Folds)")
+    
+    for model_name, folds in evaluation_results.items():
+        all_y_true = []
+        all_y_pred = []
+        
+        for fold_result in folds:
+            all_y_true.extend(fold_result['y_true'])
+            all_y_pred.extend(fold_result['y_pred'])
+            
+        accuracy = accuracy_score(all_y_true, all_y_pred)
+        report = classification_report(all_y_true, all_y_pred)
+        cm = confusion_matrix(all_y_true, all_y_pred)
+        
+        print(f"- {model_name.upper()} -")
+        print(f"Overall Accuracy: {accuracy:.4f}")
+        print("\nConfusion Matrix:")
+        print(cm)
+        print("\nClassification Report:")
+        print(report)
+        print("-" * 50)
